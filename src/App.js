@@ -10,8 +10,19 @@ class App extends React.Component {
 constructor() {
   super();
   this.state = {
-    tasks: ""
-    
+    tasks: [
+      {
+        task: 'Call Mom',
+        id: 1528817077286,
+        completed: false
+      },
+      {
+        task: 'Feed Kid',
+        id: 1528817084358,
+        completed: false
+      }
+    ],
+    todo: ''
   };
 }
 
@@ -38,21 +49,28 @@ addTodo = (itemName) => {
   });
 };
 
-
-
 toggleItem = (itemId) => {
+  console.log("TodoForm: toggleItem: itemId:", itemId);
   this.setState({
-    tasks: this.state.tasks.map((item) => {
-      if (item.id === itemId) {
-        return {
-          ...item,
-          completed: !item.completed
-        };
-      }
-      return item;
-    })
+    tasks: this.state.tasks.map((item) =>
+      itemId === item.id ? { ...item, completed: !item.completed } : item
+    ),
   });
 };
+
+// toggleItem = (itemId) => {
+//   this.setState({
+//     tasks: this.state.tasks.map((item) => {
+//       if (item.id === itemId) {
+//         return {
+//           ...item,
+//           completed: !item.completed
+//         };
+//       }
+//       return item;
+//     })
+//   });
+// };
 
 
 handleChanges = (e) => {

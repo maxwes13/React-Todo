@@ -21,8 +21,10 @@ return (
 
     <TextField 
     className="Todo" 
-    label="Outlined" 
+    label="To Do Item" 
     variant="outlined"
+    value={props.tasks}
+    onChange={props.handleChanges}
      />
 
     <Button>Add Todo</Button>
