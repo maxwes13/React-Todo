@@ -1,35 +1,36 @@
 import React from 'react';
 import TodoList from './components/TodoList'
 import TodoForm from './components/TodoForm'
+import { Typeography, Typography } from '@material-ui/core'
 
+const tasks = [
+  {
+    itemName: 'Call Mom',
+    id: 1528817077286,
+    completed: false
+  },
+  {
+    itemName: 'Feed Kid',
+    id: 1528817084358,
+    completed: false
+  }
 
-
-
+];
 
 class App extends React.Component {
-constructor() {
-  super();
-  this.state = {
-    tasks: [
-      {
-        task: 'Call Mom',
-        id: 1528817077286,
-        completed: false
-      },
-      {
-        task: 'Feed Kid',
-        id: 1528817084358,
-        completed: false
-      }
-    ],
-    todo: ''
-  };
-}
+  constructor() {
+    super();
+    this.state = {
+      tasks: tasks,
+    };
+  }
+
+
 
 
 
 clearCompleted = () => {
-  this.state({
+  this.setState({
     tasks: this.state.tasks.filter((item) => {
       return !item.completed;
     }),
@@ -40,17 +41,22 @@ clearCompleted = () => {
 
 
 addTodo = (itemName) => {
-  itemName.preventDefault();
-  this.setState({
-    tasks: [
-      ...this.state.tasks,
-      { id: Date.now(), name: itemName, completed: false },
-    ],
-  });
-};
+     const newTask = {
+      tasks: [
+        ...this.state.tasks,
+        {
+          id: Date.now(),
+          itemName: itemName,
+          completed: false,
+        },
+      ],
+    };
+
+    this.setState(newTask);
+  };
 
 toggleItem = (itemId) => {
-  console.log("TodoForm: toggleItem: itemId:", itemId);
+  // console.log("TodoForm: toggleItem: itemId:", itemId);
   this.setState({
     tasks: this.state.tasks.map((item) =>
       itemId === item.id ? { ...item, completed: !item.completed } : item
@@ -58,33 +64,7 @@ toggleItem = (itemId) => {
   });
 };
 
-// toggleItem = (itemId) => {
-//   this.setState({
-//     tasks: this.state.tasks.map((item) => {
-//       if (item.id === itemId) {
-//         return {
-//           ...item,
-//           completed: !item.completed
-//         };
-//       }
-//       return item;
-//     })
-//   });
-// };
 
-
-handleChanges = (e) => {
-  this.setState({
-    tasks: e.target.value
-  });
-};
-
-
-
-handleSubmit = (e) => {
-  e.preventDefault();
-  this.addTodo(this.state.tasks);
-};
 
 
 
@@ -95,9 +75,11 @@ handleSubmit = (e) => {
     return (
       <div className="App">
         <div className="header">
-          <h2>All of Your Tasks</h2>
+          <Typography variant="h3">All of Your Tasks</Typography>
           <TodoForm 
-          addTodo={this.addTodo} />
+          tasks={this.state.tasks}
+          addTodo={this.addTodo}
+          clearCompleted={this.clearCompleted} />
         </div>
           <TodoList 
           tasks={this.state.tasks}
